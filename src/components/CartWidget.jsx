@@ -1,11 +1,16 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
 
-function CartWidget({ count = 0 }) {
+function CartWidget() {
+  const { totalItems } = useCart()
+  const count = totalItems()
+
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }} aria-label="cart-widget">
-      <span style={{ fontSize: '1.25rem' }} aria-hidden>🛒</span>
-      <span>{count}</span>
-    </div>
+    <Link to="/cart" className="d-flex align-items-center gap-2 text-decoration-none" aria-label="cart-widget">
+      <span className="fs-5" aria-hidden>🛒</span>
+      {count > 0 && <span className="badge bg-primary">{count}</span>}
+    </Link>
   )
 }
 

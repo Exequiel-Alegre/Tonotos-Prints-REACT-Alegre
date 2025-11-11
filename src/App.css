@@ -1,0 +1,9 @@
+/* App.css - mínimo, Bootstrap se encargará del resto */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+main {
+  min-height: 60vh;
+  padding-top: 1rem;
+}

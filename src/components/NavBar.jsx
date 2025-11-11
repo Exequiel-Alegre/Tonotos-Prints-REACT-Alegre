@@ -1,20 +1,49 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import CartWidget from './CartWidget'
+
+const categories = [
+  { id: 'all', label: 'Todos' },
+  { id: 'posters', label: 'Posters' },
+  { id: 'shirts', label: 'Remeras' },
+  { id: 'mugs', label: 'Tazas' }
+]
 
 function NavBar() {
   return (
-    <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 1rem', backgroundColor: '#000', color: '#fff' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <img src="src/assets/tonotos letraslogo.svg" alt="logo" style={{ width: 150, height: 88, }} />
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-2">
+      <div className="container-fluid">
+        {/* Logo a la izquierda */}
+        <Link to="/" className="navbar-brand d-flex align-items-center" style={{ marginRight: 0 }}>
+          <img src="src/assets/tonotos letraslogo.svg" alt="logo" className="d-inline-block" style={{ width: 150, height: 50 }} />
+        </Link>
+
+        {/* Toggler (hamburguesa) visible en pantallas pequeñas */}
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        {/* Collapse que contendrá los enlaces centrados */}
+        <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+          <ul className="navbar-nav mb-2 mb-lg-0">
+            <li className="nav-item">
+              <NavLink to="/" className={({isActive}) => `nav-link ${isActive ? 'active fw-bold' : ''}`} end>
+                Inicio
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/contact" className={({isActive}) => `nav-link ${isActive ? 'active fw-bold' : ''}`}>
+                Contacto
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+
+        {/* CartWidget a la derecha */}
+        <div className="d-flex align-items-center">
+          <CartWidget />
+        </div>
       </div>
-
-      <ul style={{ listStyle: 'none', display: 'flex', gap: 16, margin: 0, padding: 0 }}>
-        <li><a href="#" style={{ color: '#fff', textDecoration: 'none' }}>Inicio</a></li>
-        <li><a href="#" style={{ color: '#fff', textDecoration: 'none' }}>Productos</a></li>
-        <li><a href="#" style={{ color: '#fff', textDecoration: 'none' }}>Contacto</a></li>
-      </ul>
-
-      <CartWidget count={0} />
     </nav>
   )
 }

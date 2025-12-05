@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { fetchProductById } from '../data/products'
+import { fetchProductById } from '../data/firebaseProducts'
 import ItemDetail from './ItemDetail'
 import { useCart } from '../context/CartContext'
 
@@ -28,7 +28,7 @@ function ItemDetailContainer() {
     const message = document.createElement('div')
     message.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3'
     message.innerHTML = `
-      <strong>¡Éxito!</strong> Agregaste ${quantity} ${quantity === 1 ? 'unidad' : 'unidades'} de ${item.title} al carrito.
+      <strong>¡Éxito!</strong> Agregaste ${quantity} ${quantity === 1 ? 'unidad' : 'unidades'} de ${item.name} al carrito.
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `
     document.body.appendChild(message)
@@ -39,10 +39,23 @@ function ItemDetailContainer() {
     }, 3000)
   }
 
-  if (loading) return <p className="loading">Cargando producto...</p>
-  if (error) return <p className="loading">Error: {error}</p>
+  if (loading) return <p className="loading">Cargando producto...</p>;
+  if (error) return (
+    <div className="alert alert-danger text-center">
+      Error: {error}. <br />
+      <a href="/" className="btn btn-link">Volver al inicio</a>
+    </div>
+  );
 
-  return <ItemDetail item={item} onAdd={handleAdd} />
+  if (item && item.stock === 0) {
+    return (
+      <div className="alert alert-warning text-center">
+        Producto sin stock.
+      </div>
+    );
+  }
+
+  return <ItemDetail item={item} onAdd={handleAdd} />;
 }
 
 export default ItemDetailContainer
